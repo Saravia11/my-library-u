@@ -3,6 +3,9 @@ import type { Book, Genres } from "../types/books";
 
 const api = useAPI();
 
+/**
+ * Create new book
+ */
 export const createBook = async (values: Book) => {
   const { data, status } = await api<Book & { _id: string }>({
     url: "/books",
