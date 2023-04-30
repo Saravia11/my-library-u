@@ -16,7 +16,7 @@ import {
   Box,
 } from "@mui/material";
 import type { BookFormDialogType } from "./index.d";
-import type { Book } from "../../types/books";
+import type { BookValues } from "../../types/books";
 
 const FIRST_BOOK_PUBLISHED_YEAR = 1449;
 const BookFormDialog: BookFormDialogType = ({
@@ -26,7 +26,7 @@ const BookFormDialog: BookFormDialogType = ({
 }) => {
   const { genresLoading, genres } = useGenres();
 
-  const handleSubmit = async (values: Book) => {
+  const handleSubmit = async (values: BookValues) => {
     const { success, data } = await createBook(values);
     onCreationFinish && onCreationFinish(success, data.message);
   };
@@ -38,7 +38,7 @@ const BookFormDialog: BookFormDialogType = ({
     },
     (_, i) => FIRST_BOOK_PUBLISHED_YEAR + i
   );
-  const initialValues: Book = {
+  const initialValues: BookValues = {
     title: "",
     author: "",
     published_year: FIRST_BOOK_PUBLISHED_YEAR,
