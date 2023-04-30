@@ -3,12 +3,12 @@ export type Book = {
   title: string;
   author: string;
   published_year: number;
-  genre: string;
+  genre: Genre;
 };
 
 export type BookValues = Omit<Book, "_id">;
 
-export type Genres = {
+export type Genre = {
   _id: string;
   name: string;
 };
