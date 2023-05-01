@@ -36,3 +36,14 @@ export const createUser = async (values: UserValues & { password: string }) => {
     data,
   };
 };
+
+export const getAllUsers = async () => {
+  const { status, data } = await api<User[]>({
+    url: "/user",
+  });
+
+  return {
+    success: status == 200,
+    data,
+  };
+};

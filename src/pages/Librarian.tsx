@@ -5,11 +5,14 @@ import BookFormDialog from "../components/BookFormDialog";
 import UserFormDialog from "../components/UserFormDialog";
 import BooksTable from "../components/BooksTable";
 import useBooks from "../hooks/useBooks";
+import UsersTable from "../components/UsersTable";
+import useUsers from "../hooks/useUsers";
 
 export default function Librarian() {
   const [openBookForm, setOpenBookForm] = useState(false);
   const [openUserForm, setOpenUserForm] = useState(false);
   const { refetch: refetchBooks } = useBooks();
+  const { refetchUsers } = useUsers();
 
   const handleCreationFinish = (
     closeFormFn: (success: boolean) => void,
@@ -37,6 +40,7 @@ export default function Librarian() {
         Add user
       </Button>
       <BooksTable />
+      <UsersTable />
       <BookFormDialog
         open={openBookForm}
         onClose={() => setOpenBookForm(false)}
@@ -48,7 +52,7 @@ export default function Librarian() {
         open={openUserForm}
         onClose={() => setOpenUserForm(false)}
         onCreationFinish={(success, message) =>
-          handleCreationFinish(setOpenUserForm, message, success, refetchBooks)
+          handleCreationFinish(setOpenUserForm, message, success, refetchUsers)
         }
       />
       <ToastContainer hideProgressBar />
