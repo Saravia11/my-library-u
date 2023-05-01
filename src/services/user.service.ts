@@ -18,6 +18,7 @@ export const login = async (email: string, password: string) => {
   });
 
   Cookies.set("user_id", data.data!._id);
+  Cookies.set("user_role", data.data!.role);
   return data.data;
 };
 
@@ -45,5 +46,16 @@ export const getAllUsers = async () => {
   return {
     success: status == 200,
     data,
+  };
+};
+
+export const getUser = async (id: string) => {
+  const { status, data } = await api<User>({
+    url: `/user/${id}`,
+  });
+
+  return {
+    success: status == 200,
+    data: data.data,
   };
 };
