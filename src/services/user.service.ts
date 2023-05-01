@@ -1,10 +1,10 @@
 import Cookies from "js-cookie";
 import useAPI from "../hooks/useAPI";
-import type { User } from "../types/user";
+import type { User, UserValues } from "../types/user";
 
-export const login = async (carnet: string, password: string) => {
-  const api = useAPI();
+const api = useAPI();
 
+export const login = async (email: string, password: string) => {
   const { data } = await api<User>({
     url: "/user/login",
     method: "POST",
@@ -12,11 +12,27 @@ export const login = async (carnet: string, password: string) => {
       "Content-Type": "application/json",
     },
     data: {
-      carnet,
+      email,
       password,
     },
   });
 
-  Cookies.set("user_id", data._id);
-  return data;
+  Cookies.set("user_id", data.data!._id);
+  return data.data;
+};
+
+export const createUser = async (values: UserValues & { password: string }) => {
+  const { status, data } = await api<User>({
+    url: "/user",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(values),
+  });
+
+  return {
+    success: status == 201,
+    data,
+  };
 };
