@@ -1,8 +1,11 @@
 import { MongoResponse } from "./general";
 
-export type User = MongoResponse & {
+export type User = {
+  _id: string;
   name: string;
   last_name: string;
-  carnet: string;
+  email: string;
   role: "librarian" | "student";
 };
+
+export type UserValues = Omit<User, "_id">;

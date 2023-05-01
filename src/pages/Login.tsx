@@ -21,10 +21,10 @@ export default function Login() {
     const fd = new FormData(event.currentTarget);
     try {
       const user = await login(
-        fd.get("carnet")!.toString(),
+        fd.get("email")!.toString(),
         fd.get("password")!.toString()
       );
-      navigate(`/${user.role}`);
+      navigate(`/${user?.role}`);
     } catch (error) {
       console.error(error);
     }
@@ -54,13 +54,13 @@ export default function Login() {
             sx={{ mt: 1 }}
           >
             <TextField
+              type="email"
               margin="normal"
               required
               fullWidth
-              id="carnet"
-              label="Carnet"
-              name="carnet"
-              autoComplete="carnet"
+              id="email"
+              label="Email"
+              name="email"
               autoFocus
             />
             <TextField
@@ -71,7 +71,6 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
             <Button
               type="submit"
