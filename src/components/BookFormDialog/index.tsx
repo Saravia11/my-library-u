@@ -42,13 +42,14 @@ const BookFormDialog: BookFormDialogType = ({
     title: "",
     author: "",
     published_year: FIRST_BOOK_PUBLISHED_YEAR,
-    genre: "",
+    genre: genres ? genres[0]._id : "",
   };
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>New book</DialogTitle>
       <DialogContent>
         <Formik
+          enableReinitialize
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={Schema}

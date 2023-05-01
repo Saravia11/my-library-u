@@ -6,7 +6,7 @@ export type Book = {
   genre: Genre;
 };
 
-export type BookValues = Omit<Book, "_id">;
+export type BookValues = Modify<Omit<Book, "_id">, { genre: string }>;
 
 export type Genre = {
   _id: string;
