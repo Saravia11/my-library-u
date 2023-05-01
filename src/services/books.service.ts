@@ -17,7 +17,7 @@ export const createBook = async (values: BookValues) => {
   });
 
   return {
-    success: status == 201,
+    success: status == 201 || status == 200,
     data,
   };
 };
@@ -45,4 +45,20 @@ export const getAllGenres = async () => {
   });
 
   return data;
+};
+
+export const checkOutBook = async (id: string) => {
+  const { status, data } = await api<Book>({
+    url: "/books/check-out",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify({ _id: id }),
+  });
+
+  return {
+    success: status == 200,
+    data,
+  };
 };
