@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { TableProps } from "./types";
 
-const Table = <T,>({ TableProps, content }: TableProps<T>) => {
+const Table = <T,>({ TableProps, content, onRowClick }: TableProps<T>) => {
   return (
     <TableContainer>
       <MUITable {...TableProps}>
@@ -21,7 +21,13 @@ const Table = <T,>({ TableProps, content }: TableProps<T>) => {
         </TableHead>
         <TableBody>
           {content?.data?.map((v, i) => (
-            <TableRow key={i}>
+            <TableRow
+              key={i}
+              onClick={() => {
+                onRowClick && onRowClick(v);
+              }}
+              sx={{ cursor: "pointer" }}
+            >
               {content.columns?.map((c, j) => (
                 <TableCell key={j}>{c.render(v)}</TableCell>
               ))}
