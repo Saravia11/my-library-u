@@ -5,6 +5,7 @@ import { createBook } from "../../services/books.service";
 import {
   FormHelperText,
   DialogContent,
+  Autocomplete,
   FormControl,
   DialogTitle,
   InputLabel,
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 import type { BookFormDialogType } from "./index.d";
 import type { BookValues } from "../../types/books";
+import useBooks from "../../hooks/useBooks";
 
 const FIRST_BOOK_PUBLISHED_YEAR = 1449;
 const BookFormDialog: BookFormDialogType = ({
@@ -25,6 +27,7 @@ const BookFormDialog: BookFormDialogType = ({
   onCreationFinish,
 }) => {
   const { genresLoading, genres } = useGenres();
+  const { books } = useBooks();
 
   const handleSubmit = async (values: BookValues) => {
     const { success, data } = await createBook(values);
@@ -43,6 +46,7 @@ const BookFormDialog: BookFormDialogType = ({
     author: "",
     published_year: FIRST_BOOK_PUBLISHED_YEAR,
     genre: genres ? genres[0]._id : "",
+    stock: 0,
   };
   return (
     <Dialog open={open} onClose={onClose}>
@@ -55,7 +59,7 @@ const BookFormDialog: BookFormDialogType = ({
           validationSchema={Schema}
           validateOnChange={false}
         >
-          {({ values, errors, handleChange }) => (
+          {({ values, errors, handleChange, setFieldValue }) => (
             <Form>
               <Box
                 sx={{
@@ -66,14 +70,22 @@ const BookFormDialog: BookFormDialogType = ({
                   width: "500px",
                 }}
               >
-                <TextField
-                  value={values.title}
-                  name="title"
-                  label="Title"
-                  placeholder="Type a title here"
-                  error={!!errors.title}
-                  helperText={errors.title}
-                  onChange={handleChange}
+                <Autocomplete
+                  freeSolo
+                  options={books?.data?.map((b) => b.title) ?? []}
+                  onChange={(_, v) => setFieldValue("title", v)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      value={values.title}
+                      name="title"
+                      label="Title"
+                      placeholder="Type a title here"
+                      error={!!errors.title}
+                      helperText={errors.title}
+                      onChange={handleChange}
+                    />
+                  )}
                 />
                 <TextField
                   value={values.author}
@@ -124,6 +136,17 @@ const BookFormDialog: BookFormDialogType = ({
                     )}
                   </FormControl>
                 )}
+                <TextField
+                  type="number"
+                  label="Stock"
+                  value={values.stock}
+                  name="stock"
+                  helperText={errors.stock}
+                  error={!!errors.stock}
+                  onChange={(e) => {
+                    if (+e.target.value >= 0) handleChange(e);
+                  }}
+                />
                 <Button type="submit" variant="contained" color="secondary">
                   Add new book
                 </Button>
@@ -142,4 +165,5 @@ const Schema = Yup.object({
   author: Yup.string().required("Author is required"),
   published_year: Yup.number().required("Published year is required"),
   genre: Yup.string().required("Genre is required"),
+  stock: Yup.number().required(),
 });

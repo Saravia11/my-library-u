@@ -4,6 +4,7 @@ export type Book = {
   author: string;
   published_year: number;
   genre: Genre;
+  stock: number;
 };
 
 export type BookValues = Modify<Omit<Book, "_id">, { genre: string }>;
