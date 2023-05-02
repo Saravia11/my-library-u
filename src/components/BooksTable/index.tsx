@@ -67,34 +67,36 @@ const BooksTable: BooksTableType = ({ canOrder, onCheckout }) => {
         content={content}
         onRowClick={canOrder ? handleRowClick : undefined}
       />
-      <Dialog open={openDetails} onClose={() => setOpenDetails(false)}>
-        <DialogTitle textAlign="center">
-          <Typography>Book: {book?.title}</Typography>
-        </DialogTitle>
-        <DialogContent>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography>Author: {book?.author}</Typography>
-          </div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography>Published year: {book?.published_year}</Typography>
-          </div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography>Genre: {book?.genre.name}</Typography>
-          </div>
-          <div style={{ marginBottom: "15px" }}>
-            <Typography>Stock: {book?.stock}</Typography>
-          </div>
-          <Button
-            variant="contained"
-            color="success"
-            sx={{ width: "300px" }}
-            onClick={handleCheckOut}
-            disabled={!book || book.stock == 0}
-          >
-            Check out this book
-          </Button>
-        </DialogContent>
-      </Dialog>
+      {canOrder && (
+        <Dialog open={openDetails} onClose={() => setOpenDetails(false)}>
+          <DialogTitle textAlign="center">
+            <Typography>Book: {book?.title}</Typography>
+          </DialogTitle>
+          <DialogContent>
+            <div style={{ marginBottom: "15px" }}>
+              <Typography>Author: {book?.author}</Typography>
+            </div>
+            <div style={{ marginBottom: "15px" }}>
+              <Typography>Published year: {book?.published_year}</Typography>
+            </div>
+            <div style={{ marginBottom: "15px" }}>
+              <Typography>Genre: {book?.genre.name}</Typography>
+            </div>
+            <div style={{ marginBottom: "15px" }}>
+              <Typography>Stock: {book?.stock}</Typography>
+            </div>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ width: "300px" }}
+              onClick={handleCheckOut}
+              disabled={!book || book.stock == 0}
+            >
+              Check out this book
+            </Button>
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 };
