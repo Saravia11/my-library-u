@@ -36,3 +36,17 @@ export const returnBook = async (id: string) => {
     data,
   };
 };
+
+/**
+ * Get student loans history from api
+ */
+export const getLoansHistory = async (userId: string) => {
+  const { status, data } = await api<Loan[]>({
+    url: `/loans/${userId}`,
+  });
+
+  return {
+    success: status == 200,
+    data: data.data,
+  };
+};
