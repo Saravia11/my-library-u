@@ -20,7 +20,8 @@ const router = createBrowserRouter([
     element: <Student />,
     loader: () => {
       const role = Cookies.get("user_role");
-      return !role || role == "librarian" ? redirect("/librarian") : null;
+      if (!role) return redirect("/login");
+      return role == "librarian" ? redirect("/librarian") : null;
     },
   },
   {
@@ -28,7 +29,8 @@ const router = createBrowserRouter([
     element: <Librarian />,
     loader: () => {
       const role = Cookies.get("user_role");
-      return !role || role == "student" ? redirect("/student") : null;
+      if (!role) return redirect("/login");
+      return role == "student" ? redirect("/student") : null;
     },
   },
 ]);
