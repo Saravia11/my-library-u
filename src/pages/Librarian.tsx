@@ -7,12 +7,17 @@ import BooksTable from "../components/BooksTable";
 import useBooks from "../hooks/useBooks";
 import UsersTable from "../components/UsersTable";
 import useUsers from "../hooks/useUsers";
+import LoansTable from "../components/LoansTable";
+import useLoans from "../hooks/useLoans";
+import Tabs from "../components/Tabs";
+import { Tab } from "../components/Tabs/types";
 
 export default function Librarian() {
   const [openBookForm, setOpenBookForm] = useState(false);
   const [openUserForm, setOpenUserForm] = useState(false);
   const { refetch: refetchBooks } = useBooks();
   const { refetchUsers } = useUsers();
+  const { refetchLoans } = useLoans();
 
   const handleCreationFinish = (
     closeFormFn: (success: boolean) => void,
@@ -27,6 +32,25 @@ export default function Librarian() {
     refetchFn();
   };
 
+  const tabs: Tab[] = [
+    { buttonText: "Books", component: <BooksTable /> },
+    { buttonText: "Users", component: <UsersTable /> },
+    {
+      buttonText: "Check outs",
+      component: (
+        <LoansTable
+          onReturnFinish={(success, message) => {
+            toast(message, {
+              type: success ? "success" : "error",
+            });
+            refetchBooks();
+            refetchLoans();
+          }}
+        />
+      ),
+    },
+  ];
+
   return (
     <div>
       <Button variant="contained" onClick={() => setOpenBookForm(true)}>
@@ -39,8 +63,7 @@ export default function Librarian() {
       >
         Add user
       </Button>
-      <BooksTable />
-      <UsersTable />
+      <Tabs tabs={tabs} />
       <BookFormDialog
         open={openBookForm}
         onClose={() => setOpenBookForm(false)}
