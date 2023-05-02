@@ -5,6 +5,7 @@ export type TableProps<T> = {
   TableProps?: TableProps;
   content?: TableContent<T>;
   actions?: Action<T>[];
+  searchFields?: (keyof T | ((item: T) => any))[];
   onRowClick?: (item: T) => any;
 };
 
