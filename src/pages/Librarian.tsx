@@ -11,6 +11,7 @@ import LoansTable from "../components/LoansTable";
 import useLoans from "../hooks/useLoans";
 import Tabs from "../components/Tabs";
 import { Tab } from "../components/Tabs/types";
+import Navbar from "../components/Navbar";
 
 export default function Librarian() {
   const [openBookForm, setOpenBookForm] = useState(false);
@@ -53,6 +54,8 @@ export default function Librarian() {
 
   return (
     <div>
+      <Navbar />
+      <br />
       <Button variant="contained" onClick={() => setOpenBookForm(true)}>
         Add book
       </Button>

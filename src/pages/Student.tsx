@@ -1,23 +1,29 @@
-import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
-import useUser from "../hooks/useUser";
 import BooksTable from "../components/BooksTable";
 import LoansHistoryTable from "../components/LoansHistoryTable";
+import { Tab } from "../components/Tabs/types";
+import Tabs from "../components/Tabs";
+import Navbar from "../components/Navbar";
 
 export default function Student() {
-  const { user } = useUser(Cookies.get("user_id")!);
-
   const handleBookCheckout = (success: boolean, message: string) => {
     toast(message, {
       type: success ? "success" : "error",
     });
   };
 
+  const tabs: Tab[] = [
+    {
+      buttonText: "All books",
+      component: <BooksTable canOrder onCheckout={handleBookCheckout} />,
+    },
+    { buttonText: "Loans", component: <LoansHistoryTable /> },
+  ];
+
   return (
     <div>
-      <h1>Hello {user?.name}</h1>
-      <BooksTable canOrder onCheckout={handleBookCheckout} />
-      <LoansHistoryTable />
+      <Navbar />
+      <Tabs tabs={tabs} />
       <ToastContainer hideProgressBar />
     </div>
   );
