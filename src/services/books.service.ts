@@ -7,7 +7,7 @@ const api = useAPI();
  * Create new book
  */
 export const createBook = async (values: BookValues) => {
-  const { data, status } = await api<Book>({
+  const { data, status } = await api<Omit<Book, "genre"> & { genre: string }>({
     url: "/books",
     method: "POST",
     headers: {

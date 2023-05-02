@@ -7,7 +7,7 @@ export type Book = {
   stock: number;
 };
 
-export type BookValues = Modify<Omit<Book, "_id">, { genre: string }>;
+export type BookValues = Omit<Book, "_id" | "genre"> & { genre: string };
 
 export type Genre = {
   _id: string;
