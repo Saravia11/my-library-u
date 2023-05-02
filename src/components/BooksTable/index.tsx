@@ -69,6 +69,7 @@ const BooksTable: BooksTableType = ({ canOrder, onCheckout }) => {
       <Table
         content={content}
         onRowClick={canOrder ? handleRowClick : undefined}
+        searchFields={["title", "author", ({ genre }) => genre.name]}
       />
       {canOrder && (
         <Dialog open={openDetails} onClose={() => setOpenDetails(false)}>

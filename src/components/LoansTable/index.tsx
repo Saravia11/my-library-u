@@ -41,6 +41,12 @@ const LoansTable: LoansTableType = ({ onReturnFinish }) => {
   ];
 
   if (loansLoading) return <></>;
-  return <Table content={content} actions={actions} />;
+  return (
+    <Table
+      content={content}
+      actions={actions}
+      searchFields={[(item) => item.student.name]}
+    />
+  );
 };
 export default LoansTable;
