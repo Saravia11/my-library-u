@@ -9,7 +9,9 @@ const useAPI =
     }>({
       ...config,
       url: `${
-        process.env.NODE_ENV == "development" ? "http://localhost:8000" : ""
+        process.env.NODE_ENV == "development"
+          ? "http://localhost:8000"
+          : "https://my-library-u-api-production.up.railway.app"
       }${config.url}`,
     });
 export default useAPI;
