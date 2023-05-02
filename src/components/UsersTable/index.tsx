@@ -17,6 +17,6 @@ const UsersTable = () => {
   };
 
   if (usersLoading) return <></>;
-  return <Table TableProps={{ sx: { width: "50%" } }} content={content} />;
+  return <Table content={content} />;
 };
 export default UsersTable;
