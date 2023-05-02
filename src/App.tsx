@@ -14,7 +14,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   { path: "/", loader: () => redirect("/login") },
-  { path: "/login", element: <Login /> },
+  {
+    path: "/login",
+    element: <Login />,
+    loader: () => {
+      const role = Cookies.get("user_role");
+      return role ? redirect(`/${role}`) : null;
+    },
+  },
   {
     path: "/student",
     element: <Student />,
