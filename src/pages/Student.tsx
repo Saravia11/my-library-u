@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import useUser from "../hooks/useUser";
 import BooksTable from "../components/BooksTable";
+import LoansHistoryTable from "../components/LoansHistoryTable";
 
 export default function Student() {
   const { user } = useUser(Cookies.get("user_id")!);
@@ -16,6 +17,7 @@ export default function Student() {
     <div>
       <h1>Hello {user?.name}</h1>
       <BooksTable canOrder onCheckout={handleBookCheckout} />
+      <LoansHistoryTable />
       <ToastContainer hideProgressBar />
     </div>
   );
