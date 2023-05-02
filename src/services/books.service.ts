@@ -47,14 +47,17 @@ export const getAllGenres = async () => {
   return data;
 };
 
-export const checkOutBook = async (id: string) => {
+/**
+ * Check out for an specific book
+ */
+export const checkOutBook = async (bookId: string, userId: string) => {
   const { status, data } = await api<Book>({
     url: "/books/check-out",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    data: JSON.stringify({ _id: id }),
+    data: JSON.stringify({ bookId, userId }),
   });
 
   return {

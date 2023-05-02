@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import Cookies from "js-cookie";
 import useBooks from "../../hooks/useBooks";
 import Table from "../Table";
 import {
@@ -24,7 +25,10 @@ const BooksTable: BooksTableType = ({ canOrder, onCheckout }) => {
   };
 
   const handleCheckOut = async () => {
-    const { success, data } = await checkOutBook(book!._id);
+    const { success, data } = await checkOutBook(
+      book!._id,
+      Cookies.get("user_id")!
+    );
     setOpenDetails(false);
     onCheckout && onCheckout(success, data.message);
     refetch();
@@ -63,7 +67,6 @@ const BooksTable: BooksTableType = ({ canOrder, onCheckout }) => {
   return (
     <>
       <Table
-        TableProps={{ sx: { width: "50%" } }}
         content={content}
         onRowClick={canOrder ? handleRowClick : undefined}
       />
