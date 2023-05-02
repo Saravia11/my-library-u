@@ -35,7 +35,6 @@ export default function Librarian() {
 
   const tabs: Tab[] = [
     { buttonText: "Books", component: <BooksTable /> },
-    { buttonText: "Users", component: <UsersTable /> },
     {
       buttonText: "Check outs",
       component: (
@@ -50,22 +49,31 @@ export default function Librarian() {
         />
       ),
     },
+    { buttonText: "Users", component: <UsersTable /> },
   ];
 
   return (
     <div>
       <Navbar />
       <br />
-      <Button variant="contained" onClick={() => setOpenBookForm(true)}>
-        Add book
-      </Button>
-      <Button
-        variant="contained"
-        color="success"
-        onClick={() => setOpenUserForm(true)}
+      <div
+        style={{
+          display: "flex",
+          gap: "15px",
+          justifyContent: "end",
+        }}
       >
-        Add user
-      </Button>
+        <Button variant="contained" onClick={() => setOpenBookForm(true)}>
+          Add book
+        </Button>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => setOpenUserForm(true)}
+        >
+          Add user
+        </Button>
+      </div>
       <Tabs tabs={tabs} />
       <BookFormDialog
         open={openBookForm}
