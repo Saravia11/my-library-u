@@ -10,6 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../services/user.service";
 import { Helmet } from "react-helmet";
+import { ToastContainer, toast } from "react-toastify";
 
 const theme = createTheme();
 
@@ -26,8 +27,12 @@ export default function Login() {
         fd.get("password")!.toString()
       );
       navigate(`/${user?.role}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      if (error.response.status == 404)
+        toast("Incorrect user or password", {
+          type: "error",
+        });
     }
   };
 
@@ -87,6 +92,7 @@ export default function Login() {
           </Box>
         </Box>
       </Container>
+      <ToastContainer hideProgressBar />
     </ThemeProvider>
   );
 }
