@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login } from "../services/user.service";
+import { Helmet } from "react-helmet";
 
 const theme = createTheme();
 
@@ -32,6 +33,9 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Helmet>
+        <title>My U Library - Login</title>
+      </Helmet>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

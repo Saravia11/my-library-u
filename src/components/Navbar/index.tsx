@@ -1,16 +1,17 @@
+import { useState } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import {
-  AppBar,
-  Box,
   IconButton,
-  Menu,
+  Typography,
   MenuItem,
   Toolbar,
-  Typography,
+  AppBar,
+  Menu,
+  Box,
 } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { useState } from "react";
+import { Helmet } from "react-helmet";
 import useUser from "../../hooks/useUser";
 
 const Navbar = () => {
@@ -29,13 +30,20 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const capitalize = (word: string) =>
+    word.charAt(0).toUpperCase() + word.slice(1);
+
+  const fullName = `${user?.name} ${user?.last_name}`;
   if (userLoading) return <></>;
   return (
     <Box sx={{ flexGrow: 1 }}>
+      <Helmet>
+        <title>My U Library - {fullName}</title>
+      </Helmet>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {user?.name} {user?.last_name}
+            {fullName} - {capitalize(user!.role)}
           </Typography>
           <div>
             <IconButton
